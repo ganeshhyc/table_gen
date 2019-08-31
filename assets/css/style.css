@@ -1,0 +1,11 @@
+.btn-circle.btn { 
+    width: 40px; 
+    height: 40px; 
+    padding: 7px 10px; 
+    border-radius: 25px; 
+    font-size: 18px; 
+    /* text-align: center;  */
+} 
+.f-r {
+    float: right !important;
+}

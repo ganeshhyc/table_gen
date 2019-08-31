@@ -1,0 +1,62 @@
+<navbar></navbar><br><br>
+<div class="container-fluid" ng-controller="landingCtrl">
+    <button class="btn" ng-class="!_toggleFlag?'btn-warning':'btn-success'" ng-click="_toggleEdit()">{{_toggleFlag?'MAKE TABLE':'EDIT TABLE'}}</button>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+            <th scope="col" ng-if="_columnData.length > 0" ng-repeat="__column in _columnData">
+                {{__column.label}}
+                <a class="text-danger" ng-click="_deleteCol(__column.id)" ng-if="_toggleFlag"><i class="fas fa-times-circle"></i></a></th>
+            <th scope="col" class="text-center" ng-if="_toggleFlag">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle btn-lg btn-block" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Add Column
+                    </button>
+                    
+                    <!-- <button class="btn btn-primary btn-circle float-center" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-caret-down"></i>
+                    </button> -->
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" ng-repeat="_column in _columns" ng-click="_makeColumn(_column)">{{_column.label}}</a>
+                    </div>
+                </div>
+            </th>
+            <th scope="col" ng-if="_toggleFlag">
+                <button class="btn btn-secondary btn-circle float-right" ng-click="addRows()">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="_row in _rowData" ng-init="parentIndex = $index">
+                <td ng-repeat="_input in _columnData" ng-init="_tempData">
+                    <form>
+                        <span ng-if="_input.type =='textbox'">
+                            <textarea ng-model="_tempData" ng-change="_inputData(parentIndex, $index, _input.type, _tempData)" ng-hide="!_toggleFlag"></textarea>{{!_toggleFlag?_tempData:''}}
+                        </span>
+                        <span ng-if="_input.type =='date'">
+                            <input class="form-control" type="date" ng-model="_tempData" ng-change="_inputData(parentIndex, $index, _input.type, _tempData)"  ng-hide="!_toggleFlag">{{!_toggleFlag?(_tempData|date):''}}
+                        </span>
+                        <span ng-if="_input.type =='checkbox'">
+                            <input class="form-control" type="{{_input.type}}" ng-model="_tempData" ng-change="_inputData(parentIndex, $index, _input.type, _tempData)"  ng-hide="!_toggleFlag">
+                            <span ng-if="!_toggleFlag && _tempData"><i class="fas fa-check"></i></span>
+                            <span ng-if="!_toggleFlag && (_tempData==false || _tempData=='' || _tempData == undefined)"><i class="fas fa-times"></i></span>
+                        </span>
+                        <span ng-if="_input.type !=='textbox' && _input.type !=='checkbox' && _input.type !=='date'">
+                            <input class="form-control" type="{{_input.type}}" ng-model="_tempData" ng-change="_inputData(parentIndex, $index, _input.type, _tempData)"  ng-hide="!_toggleFlag">{{!_toggleFlag?_tempData:''}}
+                        </span>
+                    </form>
+                </td>
+                <td class="text-center" ng-if="_toggleFlag">
+                    <button class="btn btn-danger btn-circle float-center" ng-click="deleteRows(_row.id)">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                
+            </tr>
+        </tbody>
+    </table>
+</div>
