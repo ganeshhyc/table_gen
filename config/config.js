@@ -37,5 +37,3 @@ const colDef = [
         "type" : "checkbox"
     }
 ];
-
-let Data
